@@ -1,0 +1,29 @@
+#needs to install requests library frist in the console
+import requests
+
+def has_shopping_cart(url):
+    try:
+        response = requests.get(url)
+        
+        #status code 200 is for a successful request
+        if response.status_code == 200:
+            #this is going to check the keywords indicating the shopping cart, if there are more, they need to be added down here
+            keywords = ['cart', 'basket', 'checkout', 'bolsa', 'carrito']
+            for keyword in keywords:
+                if keyword in response.text.lower():
+                    return True
+            
+            return False
+        else:
+            print(f"Failed to fetch the webpage. Status code: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
+
+#finally, this is going to be the example usage, in case you want to added into an 'input', you can do so by adding it in the line down here like website_url = input('Insert Website: ')
+website_url = 'insert website here'
+if has_shopping_cart(website_url):
+    print(f"The website {website_url} has a shopping cart.")
+else:
+    print(f"The website {website_url} does not have a shopping cart.")
